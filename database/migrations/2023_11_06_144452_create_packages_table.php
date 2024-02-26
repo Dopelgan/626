@@ -16,12 +16,20 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('count');
-            $table->unsignedInteger('price');
-            $table->unsignedBigInteger('order_id');
+            $table->timestamp('packed_at')->nullable();
+            $table->timestamp('sent_at')->nullable();
+            $table->timestamp('delivered_at')->nullable();
+            $table->timestamp('removed_at')->nullable();
+            $table->timestamp('removed_at')->nullable();
+            $table->timestamp('returned_at')->nullable();
+            $table->enum('current_status', ['new', 'packed', 'sent', 'delivered', 'removed', 'to_return', 'returned'])->default('new');
+            $table->enum('type', ['multiplace', 'standard']);
+            $table->unsignedBigInteger('count')->nullable();
+            $table->unsignedInteger('price')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 

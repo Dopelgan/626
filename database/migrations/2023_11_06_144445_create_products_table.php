@@ -19,10 +19,10 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->decimal('price')->default('0')->unsigned();
-            $table->unsignedInteger('year');
+            $table->unsignedInteger('year')->default('0');
             $table->longText('picture')->nullable();
             $table->unsignedBigInteger('count')->default('0');
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->unique(['name', 'category_id']);
             $table->foreign('category_id')->references('id')->on('categories');
         });
